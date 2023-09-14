@@ -15,35 +15,78 @@
 
 const log = console.log;
 let n = 3;
-const generateParenthesis = (n) => dfs(n);
 
-const dfs = (n, combos = [], open = 0, close = 0, path = []) => {
-    const isBaseCase = (path.length === (n * 2));
-    if(isBaseCase) {
-        combos.push(path.join(''));
+const generateParenthesis = function(n) {
+    const results = [];
 
-        return combos;
+    generateParentheses(results, '', 0, 0, n);
+    return results;
+};
+
+const generateParentheses = (results, path, open, close, n) => {
+    if(path.length === (n * 2)) {
+        results.push(path);
+        return;
     }
 
-    const isOpen = open < n;
-    if(isOpen) backTrackOpen(n, combos, open, close, path);
+    if(open < n) generateParentheses(results, path + '(', open + 1, close, n);
 
-    const isClose = close < open;
-    if(isClose) backTrackClose(n, combos, open, close, path);
+    if(close < open) generateParentheses(results, path + ')', open, close + 1, n);
 
-    return combos;
 }
 
-const backTrackOpen = (n, combos, open, close, path) => {
-    path.push('(');
-    dfs(n, combos, open + 1, close, path);
-    path.pop();
-}
+// const generateParenthesis = function(n) {
+//     const combos = [];
+    
+//     generateParentheses(combos, '', 0, 0, n);
+//     return combos;
+// };
 
-const backTrackClose = (n, combos, open, close, path) => {
-    path.push(')');
-    dfs(n, combos, open, close + 1, path);
-    path.pop();
-}
+// const generateParentheses = (combos, current, open, close, n) => {
+//     if(current.length === (n * 2)) {
+//         combos.push(current);
+//         return;
+//     }
 
-log(generateParentheses(n));
+//     if(open < n) generateParentheses(combos, current + '(', open + 1, close, n);
+
+    
+//     if(close < open) generateParentheses(combos, current + ')', open, close + 1, n);
+
+// }
+
+// var generateParenthesis = (n) => dfs(n);
+
+// const dfs = (n, combos = [], open = 0, close = 0, path = []) => {
+//     const isBaseCase = (path.length === (n * 2));
+//     if (isBaseCase) {
+//         combos.push(path.join(''));/* Space O(N + N) */
+
+//         return combos; 
+//     }
+
+//     const isOpen = open < n;
+//     if (isOpen) backTrackOpen(n, combos, open, close, path);  /* Time O(2^N) | Space O(2^N) */
+
+//     const isClose = close < open;
+//     if (isClose) backTrackClose(n, combos, open, close, path);/* Time O(2^N) | Space O(2^N) */
+
+//     return combos;
+// }
+
+// const backTrackOpen = (n, combos, open, close, path) => {
+//     path.push('(');/* Space O(N) */
+//         dfs(n, combos, (open + 1), close, path);/* Time O(2^N) | Space O(2^N) */
+//     path.pop();
+// }
+
+// const backTrackClose = (n, combos, open, close, path) => {
+//     path.push(')');/* Space O(N) */
+//         dfs(n, combos, open, (close + 1), path);/* Time O(2^N) | Space O(2^N) */
+//     path.pop();
+// }
+
+
+
+
+log(generateParenthesis(n));
